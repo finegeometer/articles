@@ -46,6 +46,7 @@ My language instead prevents the programmer from *destroying* dangling pointers.
 Rust's lifetimes are added *on top* of the type system. My strategy, on the other hand, can be implemented *within* the type system. Here's the scheme:
 
 - There is a type `Borrowed<L, T>`, that represents a value of type `T` that has been (immutably) borrowed by something else. `Borrowed<L, T>` does not implement `Move`, `Copy`, or `Del`.
+<sup id="a4">[Note 4](#f4)</sup>
 
 - There is a type `Ref<L, T>`, that represents an (immutable) reference to a value of type `T`. `Ref<L, T>` implements `Move` and `Copy`, but not `Del`.
 
@@ -55,7 +56,6 @@ Rust's lifetimes are added *on top* of the type system. My strategy, on the othe
 
 - A reference `Ref<L, U>` can be returned to its owner `Borrowed<L, T>`, The `Borrowed<L, T>` continues to exist (in the same location); the `Ref<L, T>` does not.
 
-<sup id="a4">[Note 4](#f4)</sup>
 
 The `L` parameter prevents a reference from being returned to the wrong place. Suppose you try to do so:
 - Create two strings, `a` and `b`.
