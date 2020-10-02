@@ -21,11 +21,11 @@ But existentials have uses beyond replicating `dyn Trait`. For example, `Vec<T>`
 
 # Move, Copy, Del
 
-In Rust, only values of certain types can be copied. This is determined by the `Copy` trait. But Rust allows *any* value to freely moved or destroyed.
+In Rust, only values of certain types can be freely copied. This is determined by the `Copy` trait. But Rust allows *any* value to be freely moved or destroyed.
 
 In my hypothetical language, as well as `Copy`, there are `Move` and `Del` traits. These control whether values can be moved and/or deleted.
 
-There is one problem I haven't solved. I want functions to be able to change the type of objects, without moving them. But I don't know how to notate the type signatures of such functions.
+There is one problem I haven't solved. I want functions to be able to change the type of objects, without moving them. But I don't know how to express the type signatures of such functions.
 
 I suppose in a less low-level language than Rust, one could simply box everything, and thus avoid the need for `Move`. But if that's not acceptable, I have no solution.
 
@@ -85,16 +85,16 @@ exists<L> {
 }
 ```
 
-It's unfortunate that I'm forced to make infinite loops unsafe. While code that hangs is annoying, I worry that forbidding it will have a side-effect of disallowing too many correct programs.
+It's unfortunate that I'm forced to make infinite loops unsafe. While infinite loops are annoying, I worry that forbidding them will have the side-effect of disallowing too many correct programs.
 
 On the other hand, I like the absence of panics. I've seen several Rust APIs that are annoyingly complicated because they have to consider the possibility of a panic. Mutex poisoning is the first example that comes to mind, but I know I've seen others.
 
 It's worth noting that getting rid of `panic!()` does *not* mean I have to get rid of `todo!()`. 
-Instead, `todo!()` should be a signal to the compiler to only do typechecking, not code generation. Then `todo!()` *has* no runtime behavior, so it doesn't need to panic.
+Instead, `todo!()` should be a signal to the compiler to do typechecking, but not code generation. Then `todo!()` *has* no runtime behavior, so it doesn't need to panic.
 
 # Conclusion
 
-This has been an exploration of one interesting way to ensure memory safety. Can you come up with any others?
+This has been an exploration of one interesting way to ensure memory safety. There are probably many more — can you come up with any?
 
 ---
 
